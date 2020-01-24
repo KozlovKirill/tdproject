@@ -1188,7 +1188,7 @@ while running:
     cursor(shield_find, heal_find, arrow_find, zastavka, information_towers)
 
     pygame.display.flip()
-    clock.tick(100)
+    clock.tick(FPS)
 
 pygame.quit()
 
