@@ -698,6 +698,7 @@ def pause(volume, run, zastavka, restart):
         screen.blit(load_image('main_meny.png', -1), (375, 325))
         screen.blit(load_image('restart.png', -1), (375, 250))
         screen.blit(load_image('exit_table.png', -1), (375, 400))
+        pygame.mouse.set_visible(1)
 
         if volume > 0:
             screen.blit(load_image('volume.png', (255, 255, 255)), (920, 560))
