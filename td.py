@@ -856,7 +856,6 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN and zastavka:
             x, y = pygame.mouse.get_pos()
-            print(x, y)
             if 670 <= x <= 710 and 55 <= y <= 95 and information_towers:
                 information_towers = False
 
