@@ -5,13 +5,13 @@ pygame.init()
 
 HP = 100
 
-MYEVENTTYPE = 1
+MYEVENTTYPE = 31
 
-MYEVENTTYPE_2 = 1
+MYEVENTTYPE_2 = 31
 
 FPS = 10
 WIDTH = 960
-HEIGHT = 540
+HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
@@ -31,6 +31,9 @@ def load_image(name, color_key=None):
     else:
         image = image.convert_alpha()
     return image
+
+
+Cursor = load_image('arrow.png', -1)
 
 
 class AnimatedSprite(pygame.sprite.Sprite):
@@ -67,7 +70,7 @@ class Enemy(AnimatedSprite):
         if self.mode == 'walk':
             self.cur_frame = (self.cur_frame + 1) % len(self.frames)
             self.image = self.frames[self.cur_frame]
-        if self.rect.x == 280 and self.rect.y == 500:
+        if self.rect.x == 280 and self.rect.y == 470:
             self.dx = 0
             self.dy = -10
         elif self.rect.x == 280 and self.rect.y == 260:
@@ -202,7 +205,7 @@ class Enemy_2(AnimatedSprite):
 
 pygame.time.set_timer(MYEVENTTYPE, 1000)  # таймер на 1 секунду
 
-pygame.time.set_timer(MYEVENTTYPE_2, 10000)
+pygame.time.set_timer(MYEVENTTYPE_2, 2000)
 
 all_sprites = pygame.sprite.Group()
 field = pygame.sprite.Sprite(all_sprites)
@@ -215,20 +218,45 @@ running = True
 
 def wave():
     if randint(0, 1) == 0:
-        dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 280, 500)
+        dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 280, 470)
     else:
         dragon = Enemy_2(load_image("orkwalk.png", color_key=-1), 7, 1, 200, -50)
     return dragon
+
 
 gold = 1000
 
 
 def draw(gold):  # рисуем золото
     font = pygame.font.Font(None, 35)
-    text = font.render(str(gold), 1, (255, 99, 71))
+    text = font.render(str(gold), 1, (204, 204, 0))
     text_x = 810
     text_y = 22
     screen.blit(text, (text_x, text_y))
+
+    if 315 < pygame.mouse.get_pos()[0] < 370 and 515 < pygame.mouse.get_pos()[1] < 590:
+        text = font.render(str(1000), 1, (204, 204, 0))
+        text_x = 315
+        text_y = 540
+        screen.blit(text, (text_x, text_y))
+
+    if 388 < pygame.mouse.get_pos()[0] < 442 and 515 < pygame.mouse.get_pos()[1] < 590:
+        text = font.render(str(1000), 1, (204, 204, 0))
+        text_x = 388
+        text_y = 540
+        screen.blit(text, (text_x, text_y))
+
+    if 465 < pygame.mouse.get_pos()[0] < 520 and 515 < pygame.mouse.get_pos()[1] < 590:
+        text = font.render(str(1000), 1, (204, 204, 0))
+        text_x = 465
+        text_y = 540
+        screen.blit(text, (text_x, text_y))
+
+    if 535 < pygame.mouse.get_pos()[0] < 591 and 515 < pygame.mouse.get_pos()[1] < 590:
+        text = font.render(str(1000), 1, (204, 204, 0))
+        text_x = 535
+        text_y = 540
+        screen.blit(text, (text_x, text_y))
 
 
 while running:
@@ -236,12 +264,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print(event.pos)
+            pass
         if event.type == MYEVENTTYPE:  # каждую секундку прибавлется по 25 золота
             gold += 25
-        if event.type == MYEVENTTYPE_2:  # каждую 5 секундку прибавлется по 1 юниту
+            # print(pygame.mouse.get_pos()[0])
+            # print(pygame.mouse.get_pos()[1])
+        if event.type == MYEVENTTYPE_2:
+            # каждую 5 секундку прибавлется по 1 юниту
             wave()
-
 
     screen.fill(pygame.Color("black"))
     all_sprites.draw(screen)
@@ -260,3 +290,5 @@ class Castle:
     # КООРДИНАТЫ НАЧАЛА ЗЕЛЕННОЙ ПОЛОСКИ (ЛЕВЫЙ ВЕРХНИЙ УГОЛ) (740, 495)
     # КООРДИНАТЫ ПРАВОГО НИЖНЕГО УГЛА(840, 510)
     pass
+
+# разворот изображения pygame.transform.flip(pig.image, True, False)
