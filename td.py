@@ -1,4 +1,7 @@
 import pygame, os
+from random import randint
+
+# ходы с низу
 pygame.init()
 
 FPS = 10
@@ -6,6 +9,7 @@ WIDTH = 960
 HEIGHT = 540
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
+
 
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -44,32 +48,41 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.cur_frame = (self.cur_frame + 1) % len(self.frames)
         self.image = self.frames[self.cur_frame]
 
+
 class Enemy(AnimatedSprite):
     def __init__(self, sheet, columns, rows, x, y):
         super().__init__(sheet, columns, rows, x, y)
-        self.dx = 5
+        self.dx = 0
         self.dy = 0
         self.mode = 'walk'
+
     def update(self):
         if self.mode == 'walk':
             self.cur_frame = (self.cur_frame + 1) % len(self.frames)
             self.image = self.frames[self.cur_frame]
-        if self.rect.x == 195 and self.rect.y == -45:
-            self.dx = 0
-            self.dy = 10
-        elif self.rect.x == 195 and self.rect.y == 95:
-            self.dx = 10
-            self.dy = 0
-        elif self.rect.x == 435 and self.rect.y == 95:
-            self.dx = 0
-            self.dy = 10
-        elif self.rect.x == 435 and self.rect.y == 415:
-            self.dx = 10
-            self.dy = 0
-        elif self.rect.x == 835 and self.rect.y == 415:
+        if self.rect.x == 280 and self.rect.y == 500:
             self.dx = 0
             self.dy = -10
-        elif self.rect.x == 835 and self.rect.y == 175:
+        elif self.rect.x == 280 and self.rect.y == 260:
+            self.dx = -10
+            self.dy = 0
+        elif self.rect.x == 120 and self.rect.y == 260:
+            self.dx = 0
+            self.dy = -10
+        elif self.rect.x == 120 and self.rect.y == 100:
+            self.dx = 10
+            self.dy = 0
+        # развилка
+        elif self.rect.x == 440 and self.rect.y == 100:
+            self.dx = 0
+            self.dy = 10
+        elif self.rect.x == 440 and self.rect.y == 420:
+            self.dx = 10
+            self.dy = 0
+        elif self.rect.x == 840 and self.rect.y == 420:
+            self.dx = 0
+            self.dy = -10
+        elif self.rect.x == 840 and self.rect.y == 170:
             self.dx = 0
             self.dy = 0
             self.frames = []
@@ -81,6 +94,47 @@ class Enemy(AnimatedSprite):
         self.rect.x += self.dx
         self.rect.y += self.dy
 
+
+class Enemy_2(AnimatedSprite):
+    def __init__(self, sheet, columns, rows, x, y):
+        super().__init__(sheet, columns, rows, x, y)
+        self.dx = 0
+        self.dy = 0
+        self.mode = 'walk'
+
+    def update(self):
+        if self.mode == 'walk':
+            self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+            self.image = self.frames[self.cur_frame]
+        if self.rect.x == 200 and self.rect.y == -50:
+            self.dx = 0
+            self.dy = 10
+        elif self.rect.x == 200 and self.rect.y == 100:
+            self.dx = 10
+            self.dy = 0
+        # развилка
+        elif self.rect.x == 440 and self.rect.y == 100:
+            self.dx = 0
+            self.dy = 10
+        elif self.rect.x == 440 and self.rect.y == 420:
+            self.dx = 10
+            self.dy = 0
+        elif self.rect.x == 840 and self.rect.y == 420:
+            self.dx = 0
+            self.dy = -10
+        elif self.rect.x == 840 and self.rect.y == 170:
+            self.dx = 0
+            self.dy = 0
+            self.frames = []
+            self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
+            self.rect.x = 835
+            self.rect.y = 176
+            self.cur_frame = 0
+            self.image = self.frames[self.cur_frame]
+        self.rect.x += self.dx
+        self.rect.y += self.dy
+
+
 all_sprites = pygame.sprite.Group()
 field = pygame.sprite.Sprite(all_sprites)
 field.image = load_image("game.jpg")
@@ -88,7 +142,10 @@ field.image = pygame.transform.scale(field.image, (WIDTH, HEIGHT))
 field.rect = field.image.get_rect()
 
 running = True
-dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 195, -45)
+if randint(0, 1) == 0:
+    dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 280, 500)
+else:
+    dragon = Enemy_2(load_image("orkwalk.png", color_key=-1), 7, 1, 200, -50)
 
 while running:
     for event in pygame.event.get():
