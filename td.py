@@ -1,8 +1,13 @@
-import pygame, os
+import pygame, os, time
 from random import randint
 
-# ходы с низу
 pygame.init()
+
+HP = 100
+
+MYEVENTTYPE = 1
+
+MYEVENTTYPE_2 = 1
 
 FPS = 10
 WIDTH = 960
@@ -55,6 +60,8 @@ class Enemy(AnimatedSprite):
         self.dx = 0
         self.dy = 0
         self.mode = 'walk'
+        self.c = randint(0, 1)
+        self.hp = 100
 
     def update(self):
         if self.mode == 'walk':
@@ -73,26 +80,54 @@ class Enemy(AnimatedSprite):
             self.dx = 10
             self.dy = 0
         # развилка
-        elif self.rect.x == 440 and self.rect.y == 100:
-            self.dx = 0
-            self.dy = 10
-        elif self.rect.x == 440 and self.rect.y == 420:
-            self.dx = 10
-            self.dy = 0
-        elif self.rect.x == 840 and self.rect.y == 420:
-            self.dx = 0
-            self.dy = -10
-        elif self.rect.x == 840 and self.rect.y == 170:
-            self.dx = 0
-            self.dy = 0
-            self.frames = []
-            self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
-            self.rect.x = 835
-            self.rect.y = 176
-            self.cur_frame = 0
-            self.image = self.frames[self.cur_frame]
-        self.rect.x += self.dx
-        self.rect.y += self.dy
+        if self.c == 1:
+            if self.rect.x == 440 and self.rect.y == 100:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 440 and self.rect.y == 420:
+                self.dx = 10
+                self.dy = 0
+            elif self.rect.x == 840 and self.rect.y == 420:
+                self.dx = 0
+                self.dy = -10
+            elif self.rect.x == 840 and self.rect.y == 170:
+                self.dx = 0
+                self.dy = 0
+                self.frames = []
+                self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
+                self.rect.x = 835
+                self.rect.y = 170
+                self.cur_frame = 0
+                self.image = self.frames[self.cur_frame]
+            self.rect.x += self.dx
+            self.rect.y += self.dy
+        else:
+            if self.rect.x == 670 and self.rect.y == 100:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 670 and self.rect.y == 250:
+                self.dx = -10
+                self.dy = 0
+            elif self.rect.x == 440 and self.rect.y == 250:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 440 and self.rect.y == 420:
+                self.dx = 10
+                self.dy = 0
+            elif self.rect.x == 840 and self.rect.y == 420:
+                self.dx = 0
+                self.dy = -10
+            elif self.rect.x == 840 and self.rect.y == 170:
+                self.dx = 0
+                self.dy = 0
+                self.frames = []
+                self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
+                self.rect.x = 835
+                self.rect.y = 170
+                self.cur_frame = 0
+                self.image = self.frames[self.cur_frame]
+            self.rect.x += self.dx
+            self.rect.y += self.dy
 
 
 class Enemy_2(AnimatedSprite):
@@ -101,6 +136,8 @@ class Enemy_2(AnimatedSprite):
         self.dx = 0
         self.dy = 0
         self.mode = 'walk'
+        self.c = randint(0, 1)
+        self.hp = 100
 
     def update(self):
         if self.mode == 'walk':
@@ -113,27 +150,59 @@ class Enemy_2(AnimatedSprite):
             self.dx = 10
             self.dy = 0
         # развилка
-        elif self.rect.x == 440 and self.rect.y == 100:
-            self.dx = 0
-            self.dy = 10
-        elif self.rect.x == 440 and self.rect.y == 420:
-            self.dx = 10
-            self.dy = 0
-        elif self.rect.x == 840 and self.rect.y == 420:
-            self.dx = 0
-            self.dy = -10
-        elif self.rect.x == 840 and self.rect.y == 170:
-            self.dx = 0
-            self.dy = 0
-            self.frames = []
-            self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
-            self.rect.x = 835
-            self.rect.y = 176
-            self.cur_frame = 0
-            self.image = self.frames[self.cur_frame]
-        self.rect.x += self.dx
-        self.rect.y += self.dy
+        if self.c == 1:
+            if self.rect.x == 440 and self.rect.y == 100:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 440 and self.rect.y == 420:
+                self.dx = 10
+                self.dy = 0
+            elif self.rect.x == 840 and self.rect.y == 420:
+                self.dx = 0
+                self.dy = -10
+            elif self.rect.x == 840 and self.rect.y == 170:
+                self.dx = 0
+                self.dy = 0
+                self.frames = []
+                self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
+                self.rect.x = 835
+                self.rect.y = 170
+                self.cur_frame = 0
+                self.image = self.frames[self.cur_frame]
+            self.rect.x += self.dx
+            self.rect.y += self.dy
+        else:
+            if self.rect.x == 670 and self.rect.y == 100:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 670 and self.rect.y == 250:
+                self.dx = -10
+                self.dy = 0
+            elif self.rect.x == 440 and self.rect.y == 250:
+                self.dx = 0
+                self.dy = 10
+            elif self.rect.x == 440 and self.rect.y == 420:
+                self.dx = 10
+                self.dy = 0
+            elif self.rect.x == 840 and self.rect.y == 420:
+                self.dx = 0
+                self.dy = -10
+            elif self.rect.x == 840 and self.rect.y == 170:
+                self.dx = 0
+                self.dy = 0
+                self.frames = []
+                self.cut_sheet(load_image('orkattack.png', color_key=-1), 7, 1)
+                self.rect.x = 835
+                self.rect.y = 170
+                self.cur_frame = 0
+                self.image = self.frames[self.cur_frame]
+            self.rect.x += self.dx
+            self.rect.y += self.dy
 
+
+pygame.time.set_timer(MYEVENTTYPE, 1000)  # таймер на 1 секунду
+
+pygame.time.set_timer(MYEVENTTYPE_2, 10000)
 
 all_sprites = pygame.sprite.Group()
 field = pygame.sprite.Sprite(all_sprites)
@@ -142,10 +211,25 @@ field.image = pygame.transform.scale(field.image, (WIDTH, HEIGHT))
 field.rect = field.image.get_rect()
 
 running = True
-if randint(0, 1) == 0:
-    dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 280, 500)
-else:
-    dragon = Enemy_2(load_image("orkwalk.png", color_key=-1), 7, 1, 200, -50)
+
+
+def wave():
+    if randint(0, 1) == 0:
+        dragon = Enemy(load_image("orkwalk.png", color_key=-1), 7, 1, 280, 500)
+    else:
+        dragon = Enemy_2(load_image("orkwalk.png", color_key=-1), 7, 1, 200, -50)
+    return dragon
+
+gold = 1000
+
+
+def draw(gold):  # рисуем золото
+    font = pygame.font.Font(None, 35)
+    text = font.render(str(gold), 1, (255, 99, 71))
+    text_x = 810
+    text_y = 22
+    screen.blit(text, (text_x, text_y))
+
 
 while running:
     for event in pygame.event.get():
@@ -153,11 +237,26 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             print(event.pos)
+        if event.type == MYEVENTTYPE:  # каждую секундку прибавлется по 25 золота
+            gold += 25
+        if event.type == MYEVENTTYPE_2:  # каждую 5 секундку прибавлется по 1 юниту
+            wave()
+
+
     screen.fill(pygame.Color("black"))
     all_sprites.draw(screen)
     all_sprites.update()
+
+    draw(gold)
+
     pygame.display.flip()
 
     clock.tick(FPS)
 
 pygame.quit()
+
+
+class Castle:
+    # КООРДИНАТЫ НАЧАЛА ЗЕЛЕННОЙ ПОЛОСКИ (ЛЕВЫЙ ВЕРХНИЙ УГОЛ) (740, 495)
+    # КООРДИНАТЫ ПРАВОГО НИЖНЕГО УГЛА(840, 510)
+    pass
